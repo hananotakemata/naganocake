@@ -1,0 +1,46 @@
+<div class="mt-3">
+<h2><span class="bg-secondary text-white">注文履歴一覧</span></h2>
+<div class="container text-center">
+<table class="table">
+  <thead style="background-color: grey; color: black;">
+    <tr>
+      <th style="border-right: 1px solid black;">注文日</th>
+      <th style="border-right: 1px solid black;">配送先</th>
+      <th style="border-right: 1px solid black;">注文商品</th>
+      <th style="border-right: 1px solid black;">支払金額</th>
+      <th style="border-right: 1px solid black;">注文詳細</th>
+    </tr>
+  </thead>
+  <% if @orders.present? %>
+  <tbody>
+    <% @sum = 0 %>
+    <% @orders.each do |order| %>
+    <tr>
+      <td style="border-right: 1px solid black;">
+        <%= order.created_at.strftime('%Y/%m/%d') %>
+      </td>
+
+      <td style="border-right: 1px solid black;">
+        〒<%= order.postal_code %><br>
+        <%= order.address %>
+      </td>
+
+      <td style="border-right: 1px solid black;">
+        <% order.order_details.each do |order_detail| %>
+          <%= order_detail.item.name %>
+        <% end %>
+      </td>
+
+      <td style="border-right: 1px solid black;">
+        <%= number_to_currency(order.billing_amount, unit: '¥', delimiter: ',', format: '%n') %>円
+      </td>
+
+      <td style="border-right: 1px solid black;">
+        <%=link_to "表示する", public_order_details_path(order), class: "btn btn-info" %>
+      </td>
+
+    </tr>
+    <% end %>
+  </tbody>
+  <% end %>
+</table>

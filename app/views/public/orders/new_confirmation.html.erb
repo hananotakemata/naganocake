@@ -1,0 +1,79 @@
+<div class="mt-3">
+<h2><span class="bg-secondary text-white">注文情報確認</span></h2>
+
+<div class="row">
+<div class="col">
+<table class="table">
+  <thead style="background-color: grey; color: black;">
+    <tr>
+      <th style="border-right: 1px solid black;">商品名</th>
+      <th style="border-right: 1px solid black;">単価(税込)</th>
+      <th style="border-right: 1px solid black;">数量</th>
+      <th style="border-right: 1px solid black;">小計</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @sum = 0 %>
+  <% @cart_items.each do |cart_item| %>
+   <tr>
+     <td style="border-right: 1px solid black;">
+       <%= image_tag cart_item.item.get_image, size: "50x50" %>
+         <%= cart_item.item.name %>
+     </td>
+     <td style="border-right: 1px solid black;">¥<%= number_to_currency(cart_item.item.with_tax_price, unit: '¥', delimiter: ',', format: '%n') %></td>
+     <td style="border-right: 1px solid black;"><%= cart_item.amount %></td>
+     <% subtotal = cart_item.subtotal %>
+     <% @sum += cart_item.subtotal %>
+     <td style="border-right: 1px solid black;">¥<%= number_with_delimiter(sprintf("%.0f", cart_item.subtotal), delimiter: ',') %></td>
+   </tr>
+  <% end %>
+  </tbody>
+</table>
+</div>
+
+<div class="col">
+<table class="table">
+  <tr>
+    <td style="border-right: 1px solid black; background-color: lightgrey;">送料</td>
+    <td style="border-right: 1px solid black;">¥<%= @order.postage %></td>
+  </tr>
+  <tr>
+    <td style="border-right: 1px solid black; background-color: lightgrey;">商品合計</td>
+    <td style="border-right: 1px solid black;">¥<%= number_with_delimiter(sprintf("%.0f", @sum), delimiter: ',') %></td>
+  </tr>
+  <tr>
+    <td style="border-right: 1px solid black; background-color: lightgrey;">請求金額</td>
+    <% total_amount = @sum + @order.postage %>
+    <td style="border-right: 1px solid black;">
+    ¥<%= number_to_currency(total_amount, unit: '¥', delimiter: ',', format: '%n') %>
+    </td>
+  </tr>
+</table>
+</div>
+</div>
+
+  <p>
+    <strong>支払い方法　</strong>
+    <%= @order.payment_method_i18n%>
+  </p>
+  <p>
+    <strong>お届け先　</strong>
+      〒<%= @order.postal_code %>
+      <%= @order.address %>
+      <%= @order.delivery_name %>
+  </p>
+<div class = "row d-flex justify-content-center">
+<%= form_with model: @order, url: public_create_order_path , local:true do |f| %>
+  <%= f.hidden_field :customer_id, value: current_customer.id %>
+  <%= f.hidden_field :payment_method, value:  @order.payment_method %>
+  <%= f.hidden_field :postage, value: 800 %>
+  <%= f.hidden_field :postal_code, value: @order.postal_code %>
+  <%= f.hidden_field :amount_requested, value: @sum + @order.postage %>
+  <%= f.hidden_field :address, value: @order.address%>
+  <%= f.hidden_field :name, value: @order.name %>
+  <%= f.submit "注文を確定する", class: "btn btn-success"%>
+<% end %>
+</div>
+
+
+

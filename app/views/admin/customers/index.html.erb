@@ -1,0 +1,29 @@
+<div class="mt-3">
+<h2><span class="bg-secondary text-white">会員一覧</span></h2>
+<div class="container text-center">
+
+<table class="table">
+  <thead>
+    <tr>
+      <th style="background-color: grey; color: black;">会員ID</th>
+      <th style="background-color: grey; color: black;">氏名</th>
+      <th style="background-color: grey; color: black;">メールアドレス</th>
+      <th style="background-color: grey; color: black;">ステータス</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @customers.each do |customer| %>
+      <tr>
+        <td><%= customer.id %></td>
+        <td><%= link_to customer.last_name + customer.first_name, admin_show_customer_path(customer) %></td>
+        <td><%= customer.email %></td>
+        <td><%= customer.customer_status %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<div class = "row d-flex justify-content-center">
+<%= paginate @customers %>
+</div>
+

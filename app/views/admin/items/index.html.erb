@@ -1,0 +1,38 @@
+<div class="mt-3">
+<h2><span class="bg-secondary text-white">商品一覧</span></h2>
+
+<div class="container text-center">
+
+<div class="d-flex justify-content-end">
+  <%= link_to  admin_new_item_path do %>
+  <i class="fa-solid fa-pen"></i>
+  <% end %>
+</div>
+
+<table class = "table">
+  <thead>
+    <tr>
+      <th style="background-color: grey; color: black;">商品ID</th>
+      <th style="background-color: grey; color: black;">商品名</th>
+      <th style="background-color: grey; color: black;">税抜価格</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.id %></td>
+        <td><%= link_to item.name, admin_show_item_path(item) %></td>
+        <td><%= number_with_delimiter(item.price) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+</div>
+
+<div class = "row d-flex justify-content-center">
+<%= paginate @items %>
+</div>
+
+
+

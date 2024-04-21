@@ -1,0 +1,26 @@
+<div class="container text-center">
+<div><%= image_tag "cakeshop.jpeg", size: "500x200" %></div>
+<div>ようこそ、ながのCAKEへ！</div>
+<div>このサイトはケーキ販売のECサイトになります。</div>
+<div>会員ではない方も商品の閲覧はできますが、</div>
+<div>購入には会員登録が必要になります。</div>
+<h2><span class="bg-secondary text-white">新着商品</span></h2>
+<div class="row">
+  <% @items.first(3).each do |item| %>
+    <div class="col">
+      <div>
+      <% if item.image.attached? %>
+        <%= image_tag item.image, size: "160x180" %>
+      <% else %>
+        <%= image_tag 'no_image_cake', size: "150x170" %>
+      <% end %>
+      </div>
+      <div><%= item.name%></div>
+      <div>¥<%= item.price %>円（税抜）</div>
+    </div>
+    <% end %>
+  </div>
+</div>
+    <div class="col text-right">
+      <%= link_to "すべての商品一覧を見る>>>", public_item_path %>
+    </div>
