@@ -59,7 +59,10 @@
 
 
   <div class = "row d-flex justify-content-center">
+  <% if @cart_item.present? %>
+  
     <%= link_to "情報入力に進む", public_new_order_input_path , method: :get , class: "btn btn-success" %>
+  <% end %>
   </div>
 
 

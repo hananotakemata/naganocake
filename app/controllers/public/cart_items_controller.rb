@@ -33,6 +33,8 @@ class Public::CartItemsController < ApplicationController
       cart_item.save
       redirect_to public_cart_items_path
     end
+
+
   end
 
   private
