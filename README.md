@@ -1,7 +1,7 @@
 # NAGANOCAKE
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+こちらはnaganocakeのアプリケーションになります。
+欲しいものを実際の画像で確認して購入できるものとなっています。
 
 Things you may want to cover:
 
